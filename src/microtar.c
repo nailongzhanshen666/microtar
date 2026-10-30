@@ -194,10 +194,10 @@ int mtar_open(mtar_t *tar, const char *filename, const char *mode) {
   if (!tar->stream) {
     return MTAR_EOPENFAIL;
   }
-  /* Read first header to check it is valid if mode is `r` */
+  /* Check the first header or end marker when opening for reading */
   if (*mode == 'r') {
     err = mtar_read_header(tar, &h);
-    if (err != MTAR_ESUCCESS) {
+    if (err != MTAR_ESUCCESS && err != MTAR_ENULLRECORD) {
       mtar_close(tar);
       return err;
     }
