@@ -215,7 +215,9 @@ int mtar_close(mtar_t *tar) {
 
 int mtar_seek(mtar_t *tar, unsigned pos) {
   int err = tar->seek(tar, pos);
-  tar->pos = pos;
+  if (!err) {
+    tar->pos = pos;
+  }
   return err;
 }
 
